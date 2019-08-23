@@ -12,6 +12,7 @@ import com.github.vaibhavsinha.kong.model.admin.plugin.PluginList;
  *  For a specific Consumer and API. Set both api_id and consumer_id.
  * Note that not all plugins allow to specify consumer_id. Check the plugin documentation.
  */
+@Deprecated
 public interface ApiPluginService {
 
 

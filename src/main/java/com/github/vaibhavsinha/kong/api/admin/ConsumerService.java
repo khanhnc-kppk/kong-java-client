@@ -5,19 +5,46 @@ import com.github.vaibhavsinha.kong.model.admin.consumer.ConsumerList;
 
 /**
  * Created by vaibhav on 13/06/17.
+ *
+ * Updated by tsingye on 2019-08-27.
  */
 public interface ConsumerService {
 
-    Consumer createConsumer(Consumer request);
+  //region Add Consumer
+  Consumer createConsumer(Consumer request);
+  //endregion
 
-    Consumer getConsumer(String usernameOrId);
+  //region List Consumer
+  ConsumerList listConsumers();
 
-    Consumer updateConsumer(String usernameOrId, Consumer request);
+  ConsumerList listConsumers(Integer size);
 
-    @Deprecated
-    Consumer createOrUpdateConsumer(Consumer request);
+  ConsumerList listConsumers(Integer size, String offset);
+  //endregion
 
-    void deleteConsumer(String usernameOrId);
+  //region Retrieve Consumer
+  Consumer retrieveConsumer(String usernameOrId);
 
-    ConsumerList listConsumers(String id, String customId, String username, Long size, String offset);
+  Consumer retrieveConsumerAssociatedToSpecificPlugin(String pluginId);
+  //endregion
+
+  //region Update Consumer
+  Consumer updateConsumer(String usernameOrId, Consumer request);
+
+  Consumer updateConsumerAssociatedToSpecificPlugin(String pluginId,
+      Consumer request);
+  //endregion
+
+  //region Update Or Create Consumer
+  Consumer createOrUpdateConsumer(String usernameOrId,
+      Consumer request);
+
+  Consumer createOrUpdateConsumerAssociatedToSpecificPlugin(String pluginId,
+      Consumer request);
+  //endregion
+
+  //region Delete Consumer
+  void deleteConsumer(String usernameOrId);
+  //endregion
+
 }
