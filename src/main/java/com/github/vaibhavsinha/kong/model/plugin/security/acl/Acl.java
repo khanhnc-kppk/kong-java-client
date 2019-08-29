@@ -15,6 +15,9 @@ public class Acl {
     private String id;
     @SerializedName("group")
     private String group;
+    @SerializedName("consumer_id")
+    @Deprecated
+    private String consumerId;
     @SerializedName("consumer")
     private IdObject consumer;
     @SerializedName("created_at")

@@ -1,5 +1,6 @@
 package com.github.vaibhavsinha.kong.model.plugin.authentication.key;
 
+import com.github.vaibhavsinha.kong.model.common.IdObject;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,10 @@ public class KeyAuthCredential {
     @SerializedName("key")
     private String key;
     @SerializedName("consumer_id")
+    @Deprecated
     private String consumerId;
+    @SerializedName("consumer")
+    private IdObject consumer;
     @SerializedName("created_at")
     private Long createdAt;
 
