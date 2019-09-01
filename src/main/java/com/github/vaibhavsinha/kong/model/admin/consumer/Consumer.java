@@ -5,17 +5,25 @@ import lombok.Data;
 
 /**
  * Created by vaibhav on 12/06/17.
+ *
+ * Updated by tsingye on 2019-08-26.
  */
 @Data
 public class Consumer {
 
-    String id;
+  @SerializedName("id")
+  private String id;
 
-    @SerializedName("custom_id")
-    String customId;
+  @SerializedName("created_at")
+  private Long createdAt;
 
-    @SerializedName("created_at")
-    Long createdAt;
+  @SerializedName("custom_id")
+  private String customId;
 
-    String username;
+  @SerializedName("tags")
+  private String[] tags;
+
+  @SerializedName("username")
+  private String username;
+
 }

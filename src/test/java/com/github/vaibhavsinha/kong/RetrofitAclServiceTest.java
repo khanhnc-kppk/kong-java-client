@@ -13,6 +13,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by dvilela on 10/22/17.
+ *
+ * Updated by tsingye on 2019-08-27.
  */
 public class RetrofitAclServiceTest extends BaseTest {
 
@@ -39,7 +41,7 @@ public class RetrofitAclServiceTest extends BaseTest {
         AclList list = kongClient.getAclService().listAcls(consumer.getId(), 1L, null);
 
         Acl acl = list.getData().get(0);
-        assertEquals(consumer.getId(), acl.getConsumerId());
+        assertEquals(consumer.getId(), acl.getConsumer().getId());
         assertEquals("default", acl.getGroup());
     }
 

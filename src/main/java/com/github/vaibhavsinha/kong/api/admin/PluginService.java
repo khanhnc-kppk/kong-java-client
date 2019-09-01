@@ -1,6 +1,5 @@
 package com.github.vaibhavsinha.kong.api.admin;
 
-import com.github.vaibhavsinha.kong.model.admin.plugin.EnabledPlugins;
 import com.github.vaibhavsinha.kong.model.admin.plugin.Plugin;
 import com.github.vaibhavsinha.kong.model.admin.plugin.PluginList;
 
@@ -13,20 +12,48 @@ import com.github.vaibhavsinha.kong.model.admin.plugin.PluginList;
  *  For every Consumer and a specific API. Only set api_id.
  *  For a specific Consumer and API. Set both api_id and consumer_id.
  * Note that not all plugins allow to specify consumer_id. Check the plugin documentation.
+ *
+ * Updated by tsingye on 2019-08-27.
  */
 public interface PluginService {
 
+  //region Add Plugin
+  Plugin createPlugin(Plugin request);
 
-    Plugin addPlugin(Plugin request);
+  Plugin createPluginAssociatedToSpecificRoute(String routeId,
+      Plugin request);
 
-    Plugin getPlugin(String nameOrId);
+  Plugin createPluginAssociatedToSpecificService(String serviceId,
+      Plugin request);
 
-    Plugin updatePlugin(String nameOrId, Plugin request);
+  Plugin createPluginAssociatedToSpecificConsumer(String consumerId,
+      Plugin request);
+  //endregion
 
-    @Deprecated
-    Plugin createOrUpdatePlugin(Plugin request);
+  //region List Plugins
+  PluginList listAllPlugins(Integer size, String offset);
 
-    void deletePlugin(String nameOrId);
+  PluginList listPluginsAssociatedToSpecificRoute(String routeId);
 
-    PluginList listPlugins(String id, String apiId, String consumerId, String name, Long size, String offset);
+  PluginList listPluginsAssociatedToSpecificService(String serviceId);
+
+  PluginList listPluginsAssociatedToSpecificConsumer(String consumerId);
+  //endregion
+
+  //region Retrieve Plugin
+  Plugin retrievePlugin(String pluginId);
+  //endregion
+
+  //region Update Plugin
+  Plugin updatePlugin(String pluginId, Plugin request);
+  //endregion
+
+  //region Update Or Create Plugin
+  Plugin createOrUpdatePlugin(String pluginId, Plugin request);
+  //endregion
+
+  //region Delete Plugin
+  void deletePlugin(String nameOrId);
+  //endregion
+
 }

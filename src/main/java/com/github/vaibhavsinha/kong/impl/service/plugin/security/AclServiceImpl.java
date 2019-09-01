@@ -14,6 +14,8 @@ import java.io.IOException;
  * Updated by fanhua on 2017-08-07.
  *
  * Upated by dvilela on 22/10/17.
+ *
+ * Updated by tsingye on 2019-08-28.
  */
 public class AclServiceImpl implements AclService {
 
@@ -23,9 +25,22 @@ public class AclServiceImpl implements AclService {
         this.retrofitAclService = retrofitAclService;
     }
     @Override
-    public void associateConsumer(String usernameOrId, String group) {
+    public Acl associateConsumer(String usernameOrId, String group) {
         try {
-            retrofitAclService.associateConsumer(usernameOrId, new Acl(group)).execute();
+            return retrofitAclService.associateConsumer(usernameOrId, new Acl(group))
+                .execute()
+                .body();
+        } catch (IOException e) {
+            throw new KongClientException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteGroupAssociatedToSpecificConsumer(String consumerId, String aclId) {
+        try {
+            retrofitAclService.deleteGroupAssociatedToSpecificConsumer(consumerId, aclId)
+                .execute()
+                .body();
         } catch (IOException e) {
             throw new KongClientException(e.getMessage());
         }

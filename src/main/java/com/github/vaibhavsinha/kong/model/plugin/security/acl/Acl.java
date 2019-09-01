@@ -1,5 +1,6 @@
 package com.github.vaibhavsinha.kong.model.plugin.security.acl;
 
+import com.github.vaibhavsinha.kong.model.common.IdObject;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,10 @@ public class Acl {
     @SerializedName("group")
     private String group;
     @SerializedName("consumer_id")
+    @Deprecated
     private String consumerId;
+    @SerializedName("consumer")
+    private IdObject consumer;
     @SerializedName("created_at")
     private Long createdAt;
 

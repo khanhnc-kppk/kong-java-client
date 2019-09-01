@@ -23,7 +23,7 @@ public class RetrofitTargetServiceTest  extends BaseTest {
         Target request = new Target();
         request.setTarget("1.2.3.4:80");
 
-        Target response = kongClient.getTargetService().createTarget("local.com", request);
+        Target response = kongClient.getTargetService().createTargetAssociatedToSpecificUpstream("local.com", request);
         System.out.print(response);
         Assert.assertEquals(request.getTarget(), response.getTarget());
     }
@@ -31,10 +31,10 @@ public class RetrofitTargetServiceTest  extends BaseTest {
 //    @Test
     public void testListTargets() throws IOException {
         List<Target> targets = new ArrayList<>();
-        TargetList targetList = kongClient.getTargetService().listTargets("local.com", null, null, null, 1L, null);
+        TargetList targetList = kongClient.getTargetService().listTargets("local.com",   1L, null);
         targets.addAll(targetList.getData());
         while (targetList.getOffset() != null) {
-            targetList = kongClient.getTargetService().listTargets("local.com", null, null, null, 1L, targetList.getOffset());
+            targetList = kongClient.getTargetService().listTargets("local.com",  1L, targetList.getOffset());
             targets.addAll(targetList.getData());
         }
         System.out.println(targets);
@@ -44,10 +44,10 @@ public class RetrofitTargetServiceTest  extends BaseTest {
 //    @Test
     public void testListActiveTargets() throws IOException {
         List<Target> targets = new ArrayList<>();
-        TargetList targetList = kongClient.getTargetService().listActiveTargets("local.com");
+        TargetList targetList = kongClient.getTargetService().listTargets("local.com", null, null);
         targets.addAll(targetList.getData());
         while (targetList.getOffset() != null) {
-            targetList = kongClient.getTargetService().listActiveTargets("listActiveTargets.com");
+            targetList = kongClient.getTargetService().listTargets("listActiveTargets.com", null, null);
             targets.addAll(targetList.getData());
         }
         System.out.println(targets);
