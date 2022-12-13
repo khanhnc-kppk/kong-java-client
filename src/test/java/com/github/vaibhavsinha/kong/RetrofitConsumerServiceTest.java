@@ -35,14 +35,14 @@ public class RetrofitConsumerServiceTest extends BaseTest {
 
     @Test
     public void test02_GetConsumer() throws IOException {
-        Consumer response = kongClient.getConsumerService().getConsumer(CONSUMER_ID);
+        Consumer response = kongClient.getConsumerService().retrieveConsumer(CONSUMER_ID);
         printJson(response);
         Assert.assertEquals(CONSUMER_ID, response.getId());
     }
 
     @Test(expected = KongClientException.class)
     public void test03_exceptionTest() throws IOException {
-        kongClient.getConsumerService().getConsumer("some-random-id");
+        kongClient.getConsumerService().retrieveConsumer("some-random-id");
     }
 
     @Test
@@ -63,7 +63,8 @@ public class RetrofitConsumerServiceTest extends BaseTest {
 //        request.setUsername(CONSUMER_USERNAME);
         request.setCreatedAt(123456789L);
 
-        Consumer response = kongClient.getConsumerService().createOrUpdateConsumer(request);
+        Consumer response = kongClient.getConsumerService()
+            .createOrUpdateConsumer(CONSUMER_ID, request);
         printJson(response);
         Assert.assertEquals(request.getCustomId(), response.getCustomId());
     }
@@ -76,10 +77,10 @@ public class RetrofitConsumerServiceTest extends BaseTest {
     @Test
     public void test10_ListConsumers() throws IOException {
         List<Consumer> consumers = new ArrayList<>();
-        ConsumerList consumerList = kongClient.getConsumerService().listConsumers(null, null, null, 1L, null);
+        ConsumerList consumerList = kongClient.getConsumerService().listConsumers(1);
         consumers.addAll(consumerList.getData());
         while (consumerList.getOffset() != null) {
-            consumerList = kongClient.getConsumerService().listConsumers(null, null, null, 1L, consumerList.getOffset());
+            consumerList = kongClient.getConsumerService().listConsumers(1, consumerList.getOffset());
             consumers.addAll(consumerList.getData());
         }
         printJson(consumers);

@@ -32,7 +32,7 @@ public class RetrofitUpstreamServiceTest  extends BaseTest {
 
 //    @Test
     public void testGetUpstream() throws IOException {
-        Upstream response = kongClient.getUpstreamService().getUpstream("0ba0f245-0fda-43a1-a96f-ac33e1b4cf41");
+        Upstream response = kongClient.getUpstreamService().retrieveUpstream("0ba0f245-0fda-43a1-a96f-ac33e1b4cf41");
         System.out.print(response);
         Assert.assertEquals("local.com", response.getName());
     }
@@ -40,10 +40,11 @@ public class RetrofitUpstreamServiceTest  extends BaseTest {
 //    @Test
     public void testListUpstreams() throws IOException {
         List<Upstream> upstreams = new ArrayList<>();
-        UpstreamList upstreamList = kongClient.getUpstreamService().listUpstreams(null, null, null, 1L, null);
+        UpstreamList upstreamList = kongClient.getUpstreamService().listAllUpstreams( 1L, null);
         upstreams.addAll(upstreamList.getData());
         while (upstreamList.getOffset() != null) {
-            upstreamList = kongClient.getUpstreamService().listUpstreams(null, null, null, 1L, upstreamList.getOffset());
+            upstreamList = kongClient.getUpstreamService()
+                .listAllUpstreams(1L, upstreamList.getOffset());
             upstreams.addAll(upstreamList.getData());
         }
         System.out.println(upstreams);
@@ -52,7 +53,7 @@ public class RetrofitUpstreamServiceTest  extends BaseTest {
 
 //    @Test(expected = KongClientException.class)
     public void exceptionTest() throws IOException {
-        kongClient.getUpstreamService().getUpstream("some-random-id");
+        kongClient.getUpstreamService().retrieveUpstream("some-random-id");
     }
 
 //    @Test
@@ -72,7 +73,7 @@ public class RetrofitUpstreamServiceTest  extends BaseTest {
         request.setId("0ba0f245-0fda-43a1-a96f-ac33e1b4cf41");
         request.setCreatedAt(new Date().getTime());
 
-        Upstream response = kongClient.getUpstreamService().createOrUpdateUpstream(request);
+        Upstream response = kongClient.getUpstreamService().createOrUpdateUpstream(request.getId(), request);
         System.out.print(response);
         Assert.assertEquals(request.getName(), response.getName());
     }

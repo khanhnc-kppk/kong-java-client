@@ -34,14 +34,14 @@ public class RetrofitPluginServiceTest  extends BaseTest {
         request.setApiId(API_ID); // make sure you put the valid API_ID here, if you don't put API_ID, the the plugin will take effect on all APIs
         request.setName(PLUGIN_NAME);
 
-        Plugin response = kongClient.getPluginService().addPlugin(request);
+        Plugin response = kongClient.getPluginService().createPlugin(request);
         printJson(response);
         Assert.assertEquals(request.getName(), response.getName());
     }
 
     @Test
     public void test12_GetPlugin() throws IOException {
-        Plugin response = kongClient.getPluginService().getPlugin(PLUGIN_ID);
+        Plugin response = kongClient.getPluginService().retrievePlugin(PLUGIN_ID);
         printJson(response);
         Assert.assertEquals(PLUGIN_NAME, response.getName());
     }
@@ -49,7 +49,7 @@ public class RetrofitPluginServiceTest  extends BaseTest {
 
     @Test(expected = KongClientException.class)
     public void test13_exceptionTest() throws IOException {
-        kongClient.getPluginService().getPlugin("some-random-id");
+        kongClient.getPluginService().retrievePlugin("some-random-id");
     }
 
 
@@ -70,7 +70,7 @@ public class RetrofitPluginServiceTest  extends BaseTest {
         request.setId(PLUGIN_ID);
         request.setCreatedAt(new Date().getTime());
 
-        Plugin response = kongClient.getPluginService().createOrUpdatePlugin(request);
+        Plugin response = kongClient.getPluginService().createOrUpdatePlugin(PLUGIN_ID, request);
         printJson(response);
         Assert.assertEquals(request.getName(), response.getName());
     }
@@ -83,10 +83,10 @@ public class RetrofitPluginServiceTest  extends BaseTest {
     @Test
     public void test20_ListPlugins() throws IOException {
         List<Plugin> plugins = new ArrayList<>();
-        PluginList pluginList = kongClient.getPluginService().listPlugins(null, null, null, null, 1L, null);
+        PluginList pluginList = kongClient.getPluginService().listAllPlugins( 1, null);
         plugins.addAll(pluginList.getData());
         while (pluginList.getOffset() != null) {
-            pluginList = kongClient.getPluginService().listPlugins(null, null, null, null, 1L, pluginList.getOffset());
+            pluginList = kongClient.getPluginService().listAllPlugins( 1, pluginList.getOffset());
             plugins.addAll(pluginList.getData());
         }
         printJson(plugins);

@@ -1,10 +1,13 @@
 package com.github.vaibhavsinha.kong.model.admin.target;
 
+import com.github.vaibhavsinha.kong.model.common.IdObject;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 /**
  * Created by vaibhav on 14/06/17.
+ *
+ * Updated by tsingye on 2019-08-27.
  */
 @Data
 public class Target {
@@ -15,8 +18,10 @@ public class Target {
     private String target;
     @SerializedName("weight")
     private Long weight;
-    @SerializedName("upstream_id")
-    private String upstreamId;
+    @SerializedName("upstream")
+    private IdObject upstream;
     @SerializedName("created_at")
     private Long createdAt;
+    @SerializedName("tags")
+    private String[] tags;
 }

@@ -10,10 +10,13 @@ import retrofit2.http.Path;
  */
 public interface RetrofitPluginRepoService {
 
-    @GET("/plugins/enabled")
-    Call<EnabledPlugins> retrieveEnabledPlugins();
+  //region Retrieve Enabled Plugins
+  @GET("plugins/enabled")
+  Call<EnabledPlugins> retrieveEnabledPlugins();
+  //endregion
 
-
-    @GET("/plugins/schema/{plugin}")
-    Call<Object> retrievePluginSchema(@Path("plugin") String pluginName);
+  //region Retrieve Plugin Schema
+  @GET("plugins/schema/{pluginName}")
+  Call<Object> retrievePluginSchema(@Path("pluginName") String pluginName);
+  //endregion
 }
